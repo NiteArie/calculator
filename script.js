@@ -64,12 +64,18 @@ const writeToNumberDisplay = (event) => {
     let numberDisplay = document.querySelector(".calculator__head__number");
     let operatorDisplay = document.querySelector(".calculator__head__operator");
 
-    console.dir(numberDisplay);
-
     if ( numberDisplay.textContent == 0) {
         numberDisplay.textContent = event.target.textContent;
     } else {
-        numberDisplay.textContent = numberDisplay.textContent + event.target.textContent;
+        if ( event.target.textContent != ".") {
+            numberDisplay.textContent = numberDisplay.textContent + event.target.textContent;
+        } else {
+            if ( numberDisplay.textContent.includes(".") ){
+                return;
+            } else {
+                numberDisplay.textContent = numberDisplay.textContent + event.target.textContent;
+            }
+        }
     }
 
     if (typeof firstNumber == "number" && operatorDisplay.textContent) {
@@ -78,15 +84,11 @@ const writeToNumberDisplay = (event) => {
         firstNumber = Number(numberDisplay.textContent);
     }
 
-    console.log(firstNumber, secondNumber);
-
 }
 
 const writeToOperatorDisplay = (event) => {
     let operatorDisplay = document.querySelector(".calculator__head__operator");
     let numberDisplay = document.querySelector(".calculator__head__number");
-
-    console.dir(operatorDisplay);
 
     if ( operatorDisplay.textContent ) {
         let result = operate(operatorDisplay.textContent, firstNumber, secondNumber);
